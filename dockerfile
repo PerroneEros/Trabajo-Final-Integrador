@@ -1,0 +1,23 @@
+# USAMOS UNA IMAGEN LIGERA DE NODE
+FROM node:22-alpine
+
+# CARPETA DE TRABAJO
+WORKDIR /app
+
+# COPIAMOS LOS ARCHIVOS DE CONF. DE PAQUETES
+COPY package*.json ./
+
+# INSTALAMOS LAS DEPENDENCIAS
+RUN npm install
+
+# COPIAMOS TODO EL CÓDIGO FUENTE (Respeta el .dockerignore)
+COPY . .
+
+# COMPILAMOS EL TYPESCRIPT (Crea la carpeta /app/dist)
+RUN npm run build
+
+# AVISAMOS QUE LA APP USA EL PUERTO 3001
+EXPOSE 3001
+
+# ARRANCAMOS LA APP
+CMD ["npm", "start"]
