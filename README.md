@@ -122,21 +122,17 @@ npm test	Ejecutar tests
 npm run lint	Revisar estilo
 npm run lint:fix	Corregir estilo automáticamente
 ```
-🤝 Contribuir
-Hacer un fork
 
-Crear una rama feature/mi-cambio
+#### 🤝 Contribuir
+- Hacer un fork
+- Crear una rama feature/mi-cambio
+- Realizar cambios y commit
+- Crear un Pull Request
+- El proyecto utiliza Husky, por lo que antes de cada commit se ejecutan validaciones automáticas.
 
-Realizar cambios y commit
+#### 👨‍💻 Autores
+- Bruno Fernandez - Ivo Depari - Eros Perrone - Franco Devaux
+- Proyecto Final —> Tecnicatura Universitaria en Programación
 
-Crear un Pull Request
-
-El proyecto utiliza Husky, por lo que antes de cada commit se ejecutan validaciones automáticas.
-
-👨‍💻 Autores
-Bruno Fernandez - Ivo Depari - Eros Perrone - Franco Devaux
-Proyecto Final — Tecnicatura Universitaria en Programación
-
-📄 Licencia
-MIT License
+📄 Licencia MIT License
 
