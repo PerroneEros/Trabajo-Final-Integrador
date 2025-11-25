@@ -5,10 +5,10 @@
 ---
 
 ## 📌 Descripción General
-AgroInsumos E-Commerce API es un backend robusto y escalable para un sistema de venta de insumos agrícolas: semillas, fertilizantes, agroquímicos, herramientas rurales, etc.  
-Incluye autenticación JWT, gestión de productos, usuarios, pedidos, consultas, reportes y un entorno completamente dockerizado.
+``AgroInsumos E-Commerce API`` es un **backend robusto y escalable** para un sistema de venta de insumos agrícolas: semillas, fertilizantes, agroquímicos, herramientas rurales, etc.  
+- Incluye autenticación JWT, gestión de productos, usuarios, pedidos, consultas, reportes y un entorno completamente dockerizado.
 
-Este proyecto busca servir como base sólida para un e-commerce moderno, modular y mantenible.
+Este proyecto **busca servir como base sólida** para un e-commerce moderno, modular y mantenible.
 
 ---
 
