@@ -58,7 +58,7 @@ src/
 ## 📦 Instalación Local (sin Docker)
 
 ### 1. Clonar repositorio
-```bash
+```ruby
 git clone https://github.com/brunofernandez87/prueba-trabajo-final.git
 cd prueba-trabajo-final
 
@@ -83,7 +83,7 @@ CREATE DATABASE agroinsumos;
 npm run dev
 ```
 ## 🐳 Instalacion con Docker (recomendado)
-```bash
+```ruby
 1. Clonar el proyecto
 
 2. Crear archivo .env (mismo contenido que arriba)
@@ -113,7 +113,7 @@ Ruta	Método	Descripción
 ```
 
 ### 📘 Scripts Disponibles
-```bash
+```ruby
 Comando	Descripción
 npm run dev	Modo desarrollo
 npm run build	Compilar TypeScript
@@ -139,3 +139,4 @@ Proyecto Final — Tecnicatura Universitaria en Programación
 
 📄 Licencia
 MIT License
+
