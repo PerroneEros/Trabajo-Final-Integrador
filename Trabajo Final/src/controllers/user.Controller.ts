@@ -1,0 +1,86 @@
+import {Request, Response} from 'express'
+import * as userService from '../services/user.Service'
+
+// Controlador para el REGISTRO
+export const registerUser = async (req: Request, res: Response) => {
+  try {
+    const newUser = await userService.register(req.body)
+    res
+      .status(201)
+      .json({message: 'Usuario registrado con éxito', user: newUser})
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(400).json({message: error.message})
+    }
+  }
+}
+
+// Controlador para el LOGIN
+export const loginUser = async (req: Request, res: Response) => {
+  try {
+    const {email, password} = req.body
+    const user = await userService.login(email, password)
+    const token = user.token
+    const username = user.name
+    res.status(200).json({message: 'Login exitoso', username, token})
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(401).json({message: error.message})
+    }
+  }
+}
+
+// Recuperar contraseña
+export const recoveryPassword = async (req: Request, res: Response) => {
+  try {
+    await userService.recoveryPassword(req.body.email)
+    res.status(200).json({message: 'contraseña restablecida'})
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(404).json(error.message)
+    }
+  }
+}
+
+// Eliminar Usuario
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const result = await userService.eliminate(
+      req.body.email,
+      req.body.password,
+    )
+    res.status(200).json(result)
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json(error.message)
+    }
+  }
+}
+
+// Cambiar contraseña
+export const changePassword = async (req: Request, res: Response) => {
+  try {
+    // Usa el id del token para mayor seguridad
+    const authUser = (req as any).user
+    if (!authUser || typeof authUser !== 'object' || !(authUser as any).id) {
+      return res.status(401).json({message: 'Token inválido o no autenticado'})
+    }
+    const id = Number((authUser as any).id)
+    const {currentPassword, newPassword} = req.body
+    if (!currentPassword || !newPassword) {
+      return res
+        .status(400)
+        .json({message: 'Falta Contraseña actual o nueva contraseña'})
+    }
+    const result = await userService.changePassword(
+      id,
+      currentPassword,
+      newPassword,
+    )
+    res.status(200).json(result)
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({message: error.message})
+    }
+  }
+}
