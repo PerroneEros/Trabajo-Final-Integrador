@@ -1,6 +1,6 @@
 # 🌱 AgroInsumos E-Commerce API
 **Backend para plataforma de comercio digital de insumos agrícolas**  
-Node.js · TypeScript · Express · Sequelize · MySQL · Docker
+``Node.js`` · ``TypeScript`` · ``Express`` · ``Sequelize`` · ``MySQL`` · ``Docker``
 
 ---
 
@@ -57,30 +57,28 @@ src/
 
 ## 📦 Instalación Local (sin Docker)
 
-### 1. Clonar repositorio
 ```ruby
-git clone https://github.com/brunofernandez87/prueba-trabajo-final.git
+# Clonar Repo
+1. git clone https://github.com/brunofernandez87/prueba-trabajo-final.git
 cd prueba-trabajo-final
 
-2. Instalar dependencias
-npm install
+# Instalar dependencias
+2. npm install
 
-3. Crear archivo .env
-
+# Crear archivo .env
 PORT=3001
-
 DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=agroinsumos
 DB_USER=root
 DB_PASSWORD=tu_password
-
 JWT_SECRET=clave_ultra_secreta
-4. Crear base de datos MySQL
 
-CREATE DATABASE agroinsumos;
-5. Ejecutar en modo desarrollo
-npm run dev
+# Crear base de datos MySQL
+4. CREATE DATABASE agroinsumos;
+
+# Ejecutar en modo desarrollo
+5. npm run dev
 ```
 ## 🐳 Instalacion con Docker (recomendado)
 ```ruby
@@ -88,17 +86,17 @@ npm run dev
 
 2. Crear archivo .env (mismo contenido que arriba)
 
-3. Construir los contenedores
-docker-compose build
+# Construir los contenedores
+3. docker-compose build
 
-4. Levantar el stack
-docker-compose up -d
+# Levantar el stack
+4. docker-compose up -d
 
-Servicios incluidos
+# Servicios incluidos
 Backend API → http://localhost:3001
-
 Base de datos MySQL → puerto 3306
 ```
+
 ### 📡 Endpoints Principales (resumen)
 ```plaintext
 Ruta	Método	Descripción
