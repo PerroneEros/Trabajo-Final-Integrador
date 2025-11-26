@@ -1,0 +1,72 @@
+[
+  {
+    "id_order": 1,
+    "id_user": 3,
+    "date": "4/26/2025",
+    "state": "entregado",
+    "total": 4.99
+  },
+  {
+    "id_order": 2,
+    "id_user": 2,
+    "date": "1/31/2025",
+    "state": "en camino",
+    "total": 9.99
+  },
+  {
+    "id_order": 3,
+    "id_user": 1,
+    "date": "8/28/2025",
+    "state": "en preparacion",
+    "total": 3.49
+  },
+  {
+    "id_order": 4,
+    "id_user": 1,
+    "date": "1/22/2025",
+    "state": "entregado",
+    "total": 30
+  },
+  {
+    "id_order": 5,
+    "id_user": 5,
+    "date": "9/24/2025",
+    "state": "en camino",
+    "total": 24.99
+  },
+  {
+    "id_order": 6,
+    "id_user": 6,
+    "date": "6/27/2025",
+    "state": "en preparacion",
+    "total": 49.99
+  },
+  {
+    "id_order": 7,
+    "id_user": 3,
+    "date": "2/18/2025",
+    "state": "entregado",
+    "total": 4.49
+  },
+  {
+    "id_order": 8,
+    "id_user": 10,
+    "date": "7/2/2025",
+    "state": "en camino",
+    "total": 39.99
+  },
+  {
+    "id_order": 9,
+    "id_user": 7,
+    "date": "11/10/2024",
+    "state": "en preparacion",
+    "total": 39.99
+  },
+  {
+    "id_order": 10,
+    "id_user": 5,
+    "date": "11/8/2024",
+    "state": "entregado",
+    "total": 39.99
+  }
+]
