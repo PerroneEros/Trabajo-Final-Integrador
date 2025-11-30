@@ -6,4 +6,3 @@ interface OrderDetailAttributes {
   unit_price: number
 }
 export default OrderDetailAttributes
-// cambiar por pedido solo se torna confuso con el nombre detalle pedido
