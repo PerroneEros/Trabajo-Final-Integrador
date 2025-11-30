@@ -3,7 +3,6 @@ import * as userService from '../../src/services/user.Service'
 import users from '../../src/mock/userMock.json'
 import user from '../../src/models/user'
 beforeAll(() => {
-  // Aseguramos una secret para pruebas
   process.env.JWT_SECRET = process.env.JWT_SECRET || 'testsecret'
 })
 describe('User Service', () => {
