@@ -25,7 +25,6 @@ describe('Pruebas de integración para Reportes (Mock)', () => {
     it('Debería retornar un error si el reporte no existe', async () => {
       const id = 9999
       const response = await request(app).get(`/api/report/${id}`)
-      // El servicio no maneja el error 404, devuelve 500
       expect(response.status).toBe(500)
     })
   })
@@ -48,7 +47,6 @@ describe('Pruebas de integración para Reportes (Mock)', () => {
 
   describe('DELETE /api/report/:id', () => {
     it('Debería eliminar un reporte existente', async () => {
-      // Usamos un reporte que sabemos que existe para la prueba
       const reportDelete = mockReport[2]
       const response = await request(app).delete(
         `/api/report/${reportDelete.id_report}`,
