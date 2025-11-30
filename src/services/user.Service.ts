@@ -14,17 +14,22 @@ const transport = nodemailer.createTransport({
 })
 
 export const register = async (userData: User) => {
-  
   const existingUser = await data.find(u => u.email === userData.email)
   if (existingUser) {
     throw new Error('El correo electrónico ya está en uso')
   }
-  const newUser = await new User(userData)
-  const salt = await bcrypt.genSalt(10)
-  const hashed = await bcrypt.hash(newUser.password_hash, salt)
-  newUser.password_hash = hashed
-  data.push(newUser)
-  return newUser
+  if (
+    userData.rol.toLocaleLowerCase() === 'vendedor' ||
+    userData.rol.toLocaleLowerCase() === 'cliente'
+  ) {
+    const newUser = await new User(userData)
+    const salt = await bcrypt.genSalt(10)
+    const hashed = await bcrypt.hash(newUser.password_hash, salt)
+    newUser.password_hash = hashed
+    data.push(newUser)
+    return newUser
+  }
+  throw new Error('Rol no aceptado')
 }
 
 // Función del LOGIN
@@ -75,7 +80,7 @@ export const recoveryPassword = async (email: string) => {
     const salt = await bcrypt.genSalt(10)
     const hashed = await bcrypt.hash(password, salt)
     user.password_hash = hashed
-    
+
     await transport.sendMail({
       from: '"Ecommerce" <no-reply@agro.com>',
       to: email,
