@@ -8,6 +8,7 @@ describe('Users API', () => {
       nombre: 'Usuario Test',
       email: 'emailtest@example.com',
       password_hash: 'contraseñahash',
+      rol: 'cliente',
     }
     const res = await request.post('/api/users/register').send(registro)
     expect(res.status).toBe(201)

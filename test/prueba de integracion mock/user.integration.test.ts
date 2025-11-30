@@ -37,12 +37,14 @@ afterEach(() => {
 describe('Pruebas de integración para Usuarios (Mock)', () => {
   describe('POST /api/users/register', () => {
     it('Debería registrar un nuevo usuario con éxito', async () => {
+      const id = mockUser.length + 1
       const newUser = {
-        id_user: 12,
+        id_user: id,
         name: 'Usuario Prueba',
         email: 'prueba@test.com',
-        password_hash: 'password123', 
-        id_rol: 1,
+        password_hash: 'password123',
+        username: 'Borges',
+        rol: 'cliente',
       }
 
       const response = await request.post('/api/users/register').send(newUser)

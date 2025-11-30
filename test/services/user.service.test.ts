@@ -12,6 +12,7 @@ describe('User Service', () => {
       name: 'UTest',
       email: 'usertest@email.com',
       password_hash: 'secret',
+      rol: 'cliente',
     }
     const created = await userService.register(user)
     expect(created).toHaveProperty('email')
@@ -34,6 +35,7 @@ describe('User Service', () => {
       name: 'BDel',
       email: 'usereliminar@email.com',
       password_hash: 'contraseñaborrar',
+      rol: 'cliente',
     }
     await userService.register(user)
     const res = await userService.eliminate(user.email, user.password_hash)
