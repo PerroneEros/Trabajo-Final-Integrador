@@ -1,7 +1,7 @@
 import OrderAttributes from './Interface/orderAttributes'
 class Order implements OrderAttributes {
   public id_order!: number
-  public id_user!: number
+  public id_user!: string
   public date!: string
   public state!: string
   public total!: number
