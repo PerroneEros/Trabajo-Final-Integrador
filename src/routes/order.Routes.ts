@@ -11,5 +11,5 @@ router.get('/', getOrders)
 router.get('/:id', orderID)
 router.delete('/:id', deleteOrder)
 router.post('/', createOrder)
-router.put('/', modifyOrder) //comprobar si con poner el id en el body basta o si hay que agregar a rutas
+router.put('/', modifyOrder) 
 export default router
