@@ -10,18 +10,14 @@ import {authMiddleware} from '../middlewares/auth.Middleware'
 
 const router = Router()
 
-// Ruta para Registrar un nuevo usuario
-// POST /api/users/register
+// Ruta para registrar un nuevo usuario
 router.post('/register', registerUser)
 
-// Ruta para Iniciar Sesión
-// POST /api/users/login
+// Ruta para iniciar sesion
 router.post('/login', loginUser)
 router.post('/recovery', recoveryPassword)
 router.delete('/delete', deleteUser)
 
-// Ruta para Cambiar Contraseña
-/*Agregue `authMiddleware` para que sólo usuarios autenticados puedan cambiar contraseña.
-El controlador usa el id del token para evitar que un usuario cambie la contraseña de otro.*/
+// Ruta para cambiar contraseña
 router.put('/user/:id', authMiddleware, changePassword)
 export default router
