@@ -1,7 +1,7 @@
 import Report from '../models/report'
 import data from '../mock/reportMock.json'
 
-//Muestra los reportes recientes
+// Mostar reporte recientes
 export const reports = async () => {
   return data
 }
