@@ -68,5 +68,54 @@
     "id_product": 6,
     "amount": 6,
     "unit_price": 3.29
+  },
+  {
+    "id_detail": 11,
+    "id_order": 2,
+    "id_product": 1,
+    "amount": 5,
+    "unit_price": 10.0
+  },
+  {
+    "id_detail": 12,
+    "id_order": 10,
+    "id_product": 7,
+    "amount": 2,
+    "unit_price": 25.5
+  },
+  {
+    "id_detail": 13,
+    "id_order": 11,
+    "id_product": 9,
+    "amount": 1,
+    "unit_price": 99.99
+  },
+  {
+    "id_detail": 14,
+    "id_order": 12,
+    "id_product": 3,
+    "amount": 3,
+    "unit_price": 39.99
+  },
+  {
+    "id_detail": 15,
+    "id_order": 13,
+    "id_product": 10,
+    "amount": 8,
+    "unit_price": 4.99
+  },
+  {
+    "id_detail": 16,
+    "id_order": 14,
+    "id_product": 1,
+    "amount": 10,
+    "unit_price": 10.0
+  },
+  {
+    "id_detail": 17,
+    "id_order": 15,
+    "id_product": 5,
+    "amount": 2,
+    "unit_price": 19.99
   }
 ]
