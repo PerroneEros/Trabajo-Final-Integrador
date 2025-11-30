@@ -6,7 +6,6 @@ interface ProductAttributes {
   stock: number
   category: string
   image: string
-  create: string //indica la fecha de cuando fue creado
+  create: string 
 }
 export default ProductAttributes
-// agregar categoria: string
