@@ -41,7 +41,7 @@ describe('Pruebas de integración para Usuarios (Mock)', () => {
         id_user: 12,
         name: 'Usuario Prueba',
         email: 'prueba@test.com',
-        password_hash: 'password123', // El mock no usa bcrypt
+        password_hash: 'password123', 
         id_rol: 1,
       }
 
