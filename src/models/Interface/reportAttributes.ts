@@ -4,5 +4,3 @@ interface ReportAttributes {
   generated_by_user: number
 }
 export default ReportAttributes
-// sacar tipo_reporte
-// sacar parametros_usados
