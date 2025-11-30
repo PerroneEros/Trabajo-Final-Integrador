@@ -12,9 +12,9 @@ const transport = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 })
-// Función para el REGISTRO
+
 export const register = async (userData: User) => {
-  // 1. Verificar si el email ya existe
+  
   const existingUser = await data.find(u => u.email === userData.email)
   if (existingUser) {
     throw new Error('El correo electrónico ya está en uso')
@@ -27,7 +27,7 @@ export const register = async (userData: User) => {
   return newUser
 }
 
-// Función para el LOGIN
+// Función del LOGIN
 export const login = async (email: string, password_raw: string) => {
   const user = await data.find(u => u.email === email)
 
@@ -64,7 +64,7 @@ export const eliminate = async (email: string, password: string) => {
   throw new Error('Credenciales invalidas')
 }
 
-//El login se hace con email y password_raw.
+//Login  con "email y password_raw"
 export const recoveryPassword = async (email: string) => {
   const user = await data.find(d => d.email === email)
   if (!user) {
@@ -75,7 +75,7 @@ export const recoveryPassword = async (email: string) => {
     const salt = await bcrypt.genSalt(10)
     const hashed = await bcrypt.hash(password, salt)
     user.password_hash = hashed
-    // cambiar a una funcion que pase una contraseña
+    
     await transport.sendMail({
       from: '"Ecommerce" <no-reply@agro.com>',
       to: email,
@@ -102,13 +102,12 @@ export const changePassword = async (
   const user = data[userIndex]
   if (!user) throw new Error('Usuario no encontrado')
 
-  // Verifica que la contraseña actual coincida.
   const isMatch = await bcrypt.compare(currentPassword, user.password_hash)
   if (!isMatch) {
     throw new Error('Contraseña actual incorrecta')
   }
 
-  // Hashea la nueva contraseña y la actualiza si las contraseñas coinciden.
+  // Verificacion - Validacion
   const salt = await bcrypt.genSalt(10)
   const hashed = await bcrypt.hash(newPassword, salt)
   user.password_hash = hashed
