@@ -6,4 +6,3 @@ interface OrderAttributes {
   total: number
 }
 export default OrderAttributes
-// Cambiar por pedidos total
