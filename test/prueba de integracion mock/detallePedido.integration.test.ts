@@ -13,7 +13,7 @@ describe('Detalle pedido integration', () => {
 
     it('deberia tirar error si el ID no coincide', async () => {
       const response = await request(app).get('/api/pedido/:500')
-      expect(response.status).toBe(404) //corregir error a 404 revisar resto de test
+      expect(response.status).toBe(404) 
     })
   })
   describe('put/api/detail', () => {
