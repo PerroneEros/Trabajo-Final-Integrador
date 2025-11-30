@@ -1,7 +1,6 @@
 import Order from '../models/order'
 import data from '../mock/orderMock.json'
 export const orders = async () => {
-  //creo que no es necesario mostrar todos los pedidos ya que se deberian mostrar por ID
   return data
 }
 export const orderID = async (id: number) => {
@@ -32,12 +31,12 @@ export const deleteOrder = async (id: number) => {
 export const modifyOrder = async (id: number, pedidoData: Order) => {
   const order = await orderID(id)
   if (!order) {
-    throw new Error('Pedido no encontrado') //tirar un error es necesario cuando ya tira error order ID?
+    throw new Error('Pedido no encontrado') 
   } else {
     order.state = pedidoData.state
     order.date = pedidoData.date
     order.total = pedidoData.total
-    // no creo necesario modificar id e id usuario
+    
     return order
   }
 }
