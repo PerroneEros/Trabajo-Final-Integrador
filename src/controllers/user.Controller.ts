@@ -1,7 +1,7 @@
 import {Request, Response} from 'express'
 import * as userService from '../services/user.Service'
 
-// Controlador para el REGISTRO
+// Controlador para REGISTRO
 export const registerUser = async (req: Request, res: Response) => {
   try {
     const newUser = await userService.register(req.body)
@@ -15,7 +15,7 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 }
 
-// Controlador para el LOGIN
+// Controlador para LOGIN
 export const loginUser = async (req: Request, res: Response) => {
   try {
     const {email, password} = req.body
@@ -42,7 +42,7 @@ export const recoveryPassword = async (req: Request, res: Response) => {
   }
 }
 
-// Eliminar Usuario
+// Eliminar usuario
 export const deleteUser = async (req: Request, res: Response) => {
   try {
     const result = await userService.eliminate(
@@ -57,10 +57,9 @@ export const deleteUser = async (req: Request, res: Response) => {
   }
 }
 
-// Cambiar contraseña
+// Cambiar la contraseña
 export const changePassword = async (req: Request, res: Response) => {
   try {
-    // Usa el id del token para mayor seguridad
     const authUser = (req as any).user
     if (!authUser || typeof authUser !== 'object' || !(authUser as any).id) {
       return res.status(401).json({message: 'Token inválido o no autenticado'})
