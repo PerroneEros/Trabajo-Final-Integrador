@@ -14,7 +14,7 @@ class User implements UserAttributes {
     this.name = userData.name
     this.email = userData.email
     this.password_hash = userData.password_hash
-    this.rol = 'cliente'
+    this.rol = userData.rol.toLocaleLowerCase()
     this.image = userData.image
     this.username = userData.username
     this.create = '23/10/25'

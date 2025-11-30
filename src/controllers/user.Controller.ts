@@ -34,7 +34,7 @@ export const loginUser = async (req: Request, res: Response) => {
 export const recoveryPassword = async (req: Request, res: Response) => {
   try {
     await userService.recoveryPassword(req.body.email)
-    res.status(200).json({message: 'contraseña restablecida'})
+    res.status(200).json({message: 'contraseña restablecida a contraRestaurar'})
   } catch (error) {
     if (error instanceof Error) {
       res.status(404).json(error.message)
@@ -60,11 +60,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 // Cambiar la contraseña
 export const changePassword = async (req: Request, res: Response) => {
   try {
-    const authUser = (req as any).user
-    if (!authUser || typeof authUser !== 'object' || !(authUser as any).id) {
-      return res.status(401).json({message: 'Token inválido o no autenticado'})
-    }
-    const id = Number((authUser as any).id)
+    const id = Number(req.params.id)
     const {currentPassword, newPassword} = req.body
     if (!currentPassword || !newPassword) {
       return res
