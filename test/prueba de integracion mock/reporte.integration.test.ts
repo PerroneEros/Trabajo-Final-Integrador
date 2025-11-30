@@ -33,7 +33,7 @@ describe('Pruebas de integración para Reportes (Mock)', () => {
     it('Debería crear un nuevo reporte', async () => {
       const newReport = {
         id_report: 11,
-        date_generated: '23/10/25',
+        date_generated: '23/10/2025',
         generated_by_user: 1,
       }
 
