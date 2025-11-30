@@ -7,7 +7,7 @@ const main = async () => {
       console.log(`Servidor escuchando en el puerto ${PORT}`)
     })
   } catch (error) {
-    console.error('No se pudo conectar a la base de datos:', error)
+    console.error('No se pudo iniciar:', error)
   }
 }
 
