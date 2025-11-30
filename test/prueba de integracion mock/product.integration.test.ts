@@ -50,7 +50,7 @@ describe('Pruebas de integración para productos (Mock)', () => {
       expect(response.body.message).toBe('Producto creado con éxito')
       expect(response.body.product).toEqual(expect.objectContaining(newOrder))
 
-      // Verificar que el producto fue realmente añadido (opcional, pero bueno para la integridad)
+      
       const getResponse = await request(app).get('/api/products/99')
       expect(getResponse.status).toBe(200)
       expect(getResponse.body).toEqual(expect.objectContaining(newOrder))
