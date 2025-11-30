@@ -25,15 +25,16 @@ describe('Pruebas de integración para Pedidos (Mock)', () => {
     it('Debería retornar un error si el pedido no existe', async () => {
       const id = 9999
       const response = await request(app).get(`/api/order/${id}`)
-      expect(response.status).toBe(500) 
+      expect(response.status).toBe(500)
     })
   })
 
   describe('POST /api/order', () => {
     it('Debería crear un nuevo pedido', async () => {
+      const id = mockOrder.length + 1
       const newOrder = {
-        id_order: 11,
-        id_user: 1,
+        id_order: id,
+        id_user: 'Jayson',
         date: '1/1/2026',
         state: 'en preparacion',
         total: 100,
@@ -49,7 +50,7 @@ describe('Pruebas de integración para Pedidos (Mock)', () => {
 
   describe('PUT /api/order/', () => {
     it('Debería actualizar un pedido existente', async () => {
-      const orderUpdate = {...mockOrder[1]} 
+      const orderUpdate = {...mockOrder[1]}
       orderUpdate.state = 'entregado'
 
       const response = await request(app).put('/api/order/').send(orderUpdate)
