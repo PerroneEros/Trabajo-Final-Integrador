@@ -25,7 +25,7 @@ describe('Pruebas de integración para Pedidos (Mock)', () => {
     it('Debería retornar un error si el pedido no existe', async () => {
       const id = 9999
       const response = await request(app).get(`/api/order/${id}`)
-      expect(response.status).toBe(500) // El servicio devuelve 500 en lugar de 404
+      expect(response.status).toBe(500) 
     })
   })
 
@@ -49,7 +49,7 @@ describe('Pruebas de integración para Pedidos (Mock)', () => {
 
   describe('PUT /api/order/', () => {
     it('Debería actualizar un pedido existente', async () => {
-      const orderUpdate = {...mockOrder[1]} // Clonar para no modificar el mock original
+      const orderUpdate = {...mockOrder[1]} 
       orderUpdate.state = 'entregado'
 
       const response = await request(app).put('/api/order/').send(orderUpdate)
