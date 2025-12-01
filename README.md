@@ -114,7 +114,7 @@ npm run dev
 npm run build	
 
 #versión de producción
-npm start	Ejecutar 
+npm start	
 
 #Ejecutar tests
 npm test
