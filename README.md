@@ -18,8 +18,8 @@ Este proyecto **busca servir como base sólida** para un e-commerce moderno, mod
 - ✔️ Carrito y pedidos  
 - ✔️ Sistema de usuarios y roles  
 - ✔️ Consultas de clientes  
-- ✔️ Reportes (ventas, actividad, productos destacados)  
-- ✔️ ORM Sequelize + MySQL  
+- ✔️ Reportes (ventas, actividad, productos destacados)
+- ✔️ Persistencia simulada (Mocks)
 - ✔️ Testing con Vitest + Supertest  
 - ✔️ Docker + docker-compose  
 - ✔️ Arquitectura profesional en capas  
@@ -29,25 +29,32 @@ Este proyecto **busca servir como base sólida** para un e-commerce moderno, mod
 ## 🏗️ Arquitectura del Proyecto
 ```plaintext
 src/
-├─ config/ # Configuración de DB, JWT, variables de entorno
 ├─ controllers/ # Manejo de requests/responses
 ├─ services/ # Lógica de negocio
 ├─ routes/ # Definición de endpoints
-├─ models/ # Modelos de Sequelize
+├─ models/ # Modelos
 ├─ middleware/ # Middlewares (auth, manejo de errores, etc.)
 ├─ utils/ # Funciones reutilizables
 ├─ mock/ # Datos temporales/mock
 ├─ app.ts # Inicialización de la App Express
 └─ server.ts # Servidor principal
 ```
+## Patron de diseño
+El proyecto sigue una Arquitectura en Capas para asegurar la separación de responsabilidades:
+
+- ✔️Rutas (Routes): Definen los endpoints y delegan al controlador.
+
+- ✔️Controladores (Controllers): Manejan la petición HTTP (request/response) y validaciones básicas.
+
+- ✔️Servicios (Services): Contienen la lógica de negocio pura.
+
+- ✔️Modelos (Data Access): Interactúan directamente con la base de datos MySQL a través de Sequelize.
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 - **Node.js 18+**  
 - **TypeScript**  
-- **Express.js**  
-- **Sequelize ORM**  
-- **MySQL**  
+- **Express.js**   
 - **JWT + Bcrypt**  
 - **Docker / Docker Compose**  
 - **Vitest / Supertest**  
@@ -65,20 +72,8 @@ cd prueba-trabajo-final
 # Instalar dependencias
 2. npm install
 
-# Crear archivo .env
-PORT=3001
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=agroinsumos
-DB_USER=root
-DB_PASSWORD=tu_password
-JWT_SECRET=clave_ultra_secreta
-
-# Crear base de datos MySQL
-4. CREATE DATABASE agroinsumos;
-
 # Ejecutar en modo desarrollo
-5. npm run dev
+3. npm run dev
 ```
 ## 🐳 Instalacion con Docker (recomendado)
 ```ruby
@@ -94,7 +89,6 @@ JWT_SECRET=clave_ultra_secreta
 
 # Servicios incluidos
 Backend API → http://localhost:3001
-Base de datos MySQL → puerto 3306
 ```
 
 ### 📡 Endpoints Principales (resumen)
@@ -127,6 +121,16 @@ npm run lint:fix	Corregir estilo automáticamente
 - Realizar cambios y commit
 - Crear un Pull Request
 - El proyecto utiliza Husky, por lo que antes de cada commit se ejecutan validaciones automáticas.
+
+
+### Limitaciones
+- Pasarela de Pagos: El sistema simula el proceso de compra; no está integrado con una pasarela real  en esta versión.
+
+- Envío de Emails: Las notificaciones por correo están configuradas pero no se realizan por el momento en los test se realiza un mock para verificar que funcionan.
+
+- Almacenamiento de Imágenes: Actualmente, las imágenes se gestionan mediante mocks.
+  
+- Base de datos: Actualmente no hay una conexion real con una base de datos se hace todo mediante mocks
 
 #### 👨‍💻 Autores
 - Bruno Fernandez - Ivo Depari - Eros Perrone - Franco Devaux
