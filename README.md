@@ -107,12 +107,23 @@ Ruta	Método	Descripción
 ### 📘 Scripts Disponibles
 ```ruby
 Comando	Descripción
-npm run dev	Modo desarrollo
-npm run build	Compilar TypeScript
-npm start	Ejecutar versión de producción
-npm test	Ejecutar tests
-npm run lint	Revisar estilo
-npm run lint:fix	Corregir estilo automáticamente
+#Modo desarrollo
+npm run dev
+
+#Compilar TypeScript
+npm run build	
+
+#versión de producción
+npm start	Ejecutar 
+
+#Ejecutar tests
+npm test
+
+#Revisar estilo
+npm run lint	
+
+#Corregir estilo automáticamente
+npm run lint:fix	
 ```
 
 #### 🤝 Contribuir
@@ -124,13 +135,13 @@ npm run lint:fix	Corregir estilo automáticamente
 
 
 ### Limitaciones
-- Pasarela de Pagos: El sistema simula el proceso de compra; no está integrado con una pasarela real  en esta versión.
+- ``Pasarela de Pagos``: El sistema simula el proceso de compra; no está integrado con una pasarela real  en esta versión.
 
-- Envío de Emails: Las notificaciones por correo están configuradas pero no se realizan por el momento en los test se realiza un mock para verificar que funcionan.
+- ``Envío de Emails``: Las notificaciones por correo están configuradas pero no se realizan por el momento en los test se realiza un mock para verificar que funcionan.
 
-- Almacenamiento de Imágenes: Actualmente, las imágenes se gestionan mediante mocks.
+- ``Almacenamiento de Imágenes``: Actualmente, las imágenes se gestionan mediante mocks.
   
-- Base de datos: Actualmente no hay una conexion real con una base de datos se hace todo mediante mocks
+- ``Base de datos``: Actualmente no hay una conexion real con una base de datos se hace todo mediante mocks
 
 #### 👨‍💻 Autores
 - Bruno Fernandez - Ivo Depari - Eros Perrone - Franco Devaux
