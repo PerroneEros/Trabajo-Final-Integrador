@@ -1,7 +1,7 @@
 interface OrderAttributes {
   id_order: number
-  id_user: string
-  date: string
+  id_user: number
+  date: Date
   state: string
   total: number
 }
