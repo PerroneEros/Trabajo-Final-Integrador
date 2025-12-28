@@ -4,7 +4,6 @@ interface UserAttributes {
   email: string
   password_hash: string
   rol: string | null
-  create: string
   image: string
   username: string
 }
