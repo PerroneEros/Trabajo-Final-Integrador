@@ -6,6 +6,5 @@ interface ProductAttributes {
   stock: number
   category: string
   image: string
-  create: string 
 }
 export default ProductAttributes
