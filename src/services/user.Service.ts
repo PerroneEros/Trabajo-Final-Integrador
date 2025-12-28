@@ -1,5 +1,4 @@
 import User from '../models/user'
-import data from '../mock/userMock.json'
 import nodemailer from 'nodemailer'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
@@ -14,7 +13,9 @@ const transport = nodemailer.createTransport({
 })
 
 export const register = async (userData: User) => {
-  const existingUser = await data.find(u => u.email === userData.email)
+  const existingUser = await User.findOne({
+    where: {email: userData.email},
+  })
   if (existingUser) {
     throw new Error('El correo electrónico ya está en uso')
   }
@@ -22,11 +23,16 @@ export const register = async (userData: User) => {
     userData.rol.toLocaleLowerCase() === 'vendedor' ||
     userData.rol.toLocaleLowerCase() === 'cliente'
   ) {
-    const newUser = await new User(userData)
     const salt = await bcrypt.genSalt(10)
-    const hashed = await bcrypt.hash(newUser.password_hash, salt)
-    newUser.password_hash = hashed
-    data.push(newUser)
+    const hashed = await bcrypt.hash(userData.password_hash, salt)
+    const newUser = await User.create({
+      name: userData.name,
+      email: userData.email,
+      password_hash: hashed,
+      rol: userData.rol,
+      image: userData.image,
+      username: userData.username,
+    })
     return newUser
   }
   throw new Error('Rol no aceptado')
@@ -34,14 +40,15 @@ export const register = async (userData: User) => {
 
 // Función del LOGIN
 export const login = async (email: string, password_raw: string) => {
-  const user = await data.find(u => u.email === email)
-
+  const user = await User.findOne({
+    where: {email: email},
+  })
   if (!user) {
     throw new Error('Credenciales inválidas')
   }
   const isMatch = await bcrypt.compare(password_raw, user.password_hash)
   if (!isMatch) {
-    throw new Error('Contra invalida')
+    throw new Error('Credenciales invalidas')
   }
   const payload = {
     id: user.id_user,
@@ -56,22 +63,24 @@ export const login = async (email: string, password_raw: string) => {
   return {name, token}
 }
 export const eliminate = async (email: string, password: string) => {
-  const user = await data.find(u => u.email === email)
+  const user = await User.findOne({
+    where: {email: email},
+  })
   if (user) {
     const isMatch = await bcrypt.compare(password, user.password_hash)
-    if (!isMatch) {
-      throw new Error('Contra invalida')
+    if (isMatch) {
+      await user.destroy()
+      return {message: 'Usuario eliminado'}
     }
-    const userIN = data.findIndex(u => u.email === email)
-    if (userIN >= 0) data.splice(userIN, 1)
-    return {message: 'Usuario eliminado'}
   }
   throw new Error('Credenciales invalidas')
 }
 
 //Login  con "email y password_raw"
 export const recoveryPassword = async (email: string) => {
-  const user = await data.find(d => d.email === email)
+  const user = await User.findOne({
+    where: {email: email},
+  })
   if (!user) {
     throw new Error('El email no esta asociado con una cuenta')
   }
@@ -80,7 +89,7 @@ export const recoveryPassword = async (email: string) => {
     const salt = await bcrypt.genSalt(10)
     const hashed = await bcrypt.hash(password, salt)
     user.password_hash = hashed
-
+    await user.save()
     await transport.sendMail({
       from: '"Ecommerce" <no-reply@agro.com>',
       to: email,
@@ -99,23 +108,18 @@ export const changePassword = async (
   currentPassword: string,
   newPassword: string,
 ) => {
-  const userIndex: number = data.findIndex(u => u.id_user === id)
-  if (userIndex === -1) {
-    throw new Error('Usuario no encontrado')
-  }
-
-  const user = data[userIndex]
-  if (!user) throw new Error('Usuario no encontrado')
-
+  const user = await User.findByPk(id)
+  if (!user) throw new Error('Credenciales invalidas')
   const isMatch = await bcrypt.compare(currentPassword, user.password_hash)
   if (!isMatch) {
-    throw new Error('Contraseña actual incorrecta')
+    throw new Error('Credenciales invalidas')
   }
 
   // Verificacion - Validacion
   const salt = await bcrypt.genSalt(10)
   const hashed = await bcrypt.hash(newPassword, salt)
   user.password_hash = hashed
+  await user.save()
 
   return {message: 'Contraseña actualizada'}
 }
