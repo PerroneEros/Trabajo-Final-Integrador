@@ -1,23 +1,56 @@
+import {DataTypes, Model, Optional} from 'sequelize'
 import ProductAttributes from './Interface/productAttributes'
-class Product implements ProductAttributes {
-  public id_product!: number
-  public name!: string
-  public description!: string | ''
-  public price!: number
-  public stock!: number
-  public category!: string
-  public image!: string
-  public readonly create!: string
-  constructor(ProductData: Product) {
-    this.id_product = ProductData.id_product
-    this.name = ProductData.name
-    this.description = ProductData.description
-    this.price = ProductData.price
-    this.category = ProductData.category
-    this.stock = ProductData.stock
-    this.image = ProductData.image
-    this.create = '23/10/2025'
-  }
+import sequelize from '../database/db'
+type productCreationAttributes = Optional<ProductAttributes, 'id_product'>
+class Product
+  extends Model<ProductAttributes, productCreationAttributes>
+  implements ProductAttributes
+{
+  declare id_product: number
+  declare name: string
+  declare description: string | ''
+  declare price: number
+  declare stock: number
+  declare category: string
+  declare image: string
 }
+Product.init(
+  {
+    id_product: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      unique: true,
+    },
+    name: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    image: {
+      type: DataTypes.STRING,
+    },
+  },
+  {
+    sequelize,
+    tableName: 'Products',
+    timestamps: true,
+    underscored: true,
+  },
+)
 
 export default Product
