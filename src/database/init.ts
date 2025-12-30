@@ -12,6 +12,10 @@ export const createDatabaseIfNotExists = async () => {
       user: DB_USER as string,
       password: DB_PASSWORD as string,
       port: Number(DB_PORT) || 3306,
+      ssl: {
+        rejectUnauthorized: true, // TiDB requiere esto como mínimo
+        minVersion: 'TLSv1.2',
+      },
     })
 
     // Usamos comillas invertidas para proteger el nombre de la DB

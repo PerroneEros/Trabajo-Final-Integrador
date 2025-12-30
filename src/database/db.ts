@@ -13,6 +13,13 @@ const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   dialect: 'mysql',
   logging: false,
   port: Number(process.env.DB_PORT) || 3306,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: true,
+      minVersion: 'TLSv1.2',
+    },
+  },
 })
 
 export default sequelize

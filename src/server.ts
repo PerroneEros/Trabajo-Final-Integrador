@@ -1,17 +1,17 @@
 import app from './app'
 import sequelize from './database/db'
-import {createDatabaseIfNotExists} from './database/init'
-import {seedDatabase} from './database/seeder'
+// import {createDatabaseIfNotExists} from './database/init'
+import {seedDatabase} from './seeders/seeder'
 import {initAssociations} from './models/associations'
 const PORT = process.env.PORT || 3001
 
 const main = async () => {
   try {
-    await createDatabaseIfNotExists()
+    // await createDatabaseIfNotExists()
     await sequelize.authenticate()
     console.log('Conexión a la base de datos establecida.')
     initAssociations()
-    await sequelize.sync({force: false, alter: true})
+    await sequelize.sync({force: false, alter: false})
     console.log('Tablas sincronizadas.')
     await seedDatabase()
     app.listen(PORT, () => {
