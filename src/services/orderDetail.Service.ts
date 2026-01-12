@@ -6,6 +6,12 @@ export const orderDetailID = async (id: number) => {
   }
   return detail
 }
+export const getOrderDetailsbyID = async (id: number) => {
+  const details = await OrderDetail.findAll({
+    where: {id_order: id},
+  })
+  return details
+}
 export const modifyDetail = async (id: number, DetailData: OrderDetail) => {
   const detail = await orderDetailID(id)
   await detail.update(DetailData)
