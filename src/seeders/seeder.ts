@@ -60,12 +60,7 @@ export const seedDatabase = async () => {
 
     const ordersToCreate = ordersData.map(o => {
       const userIdReal = userMap.get(o.id_user)
-
-      if (!userIdReal) {
-        throw new Error(
-          `Usuario ${o.id_user} no encontrado para la orden ${o.id_order}`,
-        )
-      }
+      if (!userIdReal) throw new Error(`Usuario ${o.id_user} no encontrado`)
 
       return {
         id_order: o.id_order,
@@ -86,6 +81,8 @@ export const seedDatabase = async () => {
     const reportsToCreate = reportsData.map(r => ({
       id_report: r.id_report,
       generated_by_user: r.generated_by_user,
+      type: 'STOCK',
+      report_data: [],
       createdAt: new Date(r.date_generated),
       updatedAt: new Date(r.date_generated),
     }))
