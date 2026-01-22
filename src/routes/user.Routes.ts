@@ -5,6 +5,9 @@ import {
   recoveryPassword,
   deleteUser,
   changePassword,
+  updateUser,
+  getAllUsers,
+  deleteUserId,
 } from '../controllers/user.Controller'
 import {authMiddleware} from '../middlewares/auth.Middleware'
 
@@ -17,7 +20,10 @@ router.post('/register', registerUser)
 router.post('/login', loginUser)
 router.post('/recovery', recoveryPassword)
 router.delete('/delete', deleteUser)
-
+router.delete('/:id', authMiddleware, deleteUserId)
 // Ruta para cambiar contraseña
-router.put('/user/:id', authMiddleware, changePassword)
+router.put('/password/:id', authMiddleware, changePassword)
+//Ruta para actualizar usuario
+router.put('/:id', updateUser)
+router.get('/', authMiddleware, getAllUsers)
 export default router
