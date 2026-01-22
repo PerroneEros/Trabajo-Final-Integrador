@@ -14,7 +14,7 @@ const router = Router()
 router.get('/', getAllProducts)
 router.get('/:id', getProductById)
 
-// Rutas protegidas 
+// Rutas protegidas
 router.post('/', authMiddleware, createProduct)
 router.put('/:id', authMiddleware, updateProduct)
 router.delete('/:id', authMiddleware, deleteProduct)
