@@ -2,10 +2,11 @@ import User from '../models/user'
 import nodemailer from 'nodemailer'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-
+import {ForeignKeyConstraintError} from 'sequelize'
 const transport = nodemailer.createTransport({
   host: process.env.Email_host,
   port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -56,11 +57,18 @@ export const login = async (email: string, password_raw: string) => {
     rol: user.rol,
     username: user.username,
   }
-  const name = user.name
   const secret = process.env.JWT_SECRET as string
   const token = jwt.sign(payload, secret, {expiresIn: '1h'})
 
-  return {name, token}
+  return {
+    id_user: user.id_user,
+    username: user.username,
+    name: user.name,
+    email: user.email,
+    rol: user.rol,
+    image: user.image,
+    token: token,
+  }
 }
 export const eliminate = async (email: string, password: string) => {
   const user = await User.findOne({
@@ -69,8 +77,20 @@ export const eliminate = async (email: string, password: string) => {
   if (user) {
     const isMatch = await bcrypt.compare(password, user.password_hash)
     if (isMatch) {
-      await user.destroy()
-      return {message: 'Usuario eliminado'}
+      try {
+        await user.destroy()
+        return {message: 'Usuario eliminado'}
+      } catch (error) {
+        if (
+          error instanceof ForeignKeyConstraintError ||
+          error.name === 'SequelizeForeignKeyConstraintError'
+        ) {
+          throw new Error(
+            'No puedes eliminar tu cuenta porque tienes pedidos registrados.',
+          )
+        }
+        throw error
+      }
     }
   }
   throw new Error('Credenciales invalidas')
@@ -99,7 +119,7 @@ export const recoveryPassword = async (email: string) => {
     return {success: true}
   } catch (error) {
     console.error('Error al enviar email:', error)
-    return {success: false, error}
+    throw new Error('No se pudo enviar el correo. Intenta más tarde.')
   }
 }
 
@@ -122,4 +142,40 @@ export const changePassword = async (
   await user.save()
 
   return {message: 'Contraseña actualizada'}
+}
+export const updateUser = async (id: number, userData: Partial<User>) => {
+  const user = await User.findByPk(id)
+  if (!user) {
+    throw new Error('Usuario no encontrado')
+  }
+  await user.update(userData)
+  return user
+}
+export const getAllUsers = async () => {
+  const users = await User.findAll({
+    attributes: {exclude: ['password_hash', 'token']},
+  })
+  return users
+}
+export const deleteUserId = async (id: number) => {
+  const user = await User.findOne({
+    where: {id_user: id},
+  })
+  if (user) {
+    try {
+      await user.destroy()
+      return {message: 'Usuario eliminado'}
+    } catch (error) {
+      if (
+        error instanceof ForeignKeyConstraintError ||
+        error.name === 'SequelizeForeignKeyConstraintError'
+      ) {
+        throw new Error(
+          'No puedes eliminar tu cuenta porque tienes pedidos registrados.',
+        )
+      }
+      throw error
+    }
+  }
+  throw new Error('Credenciales invalidas')
 }
