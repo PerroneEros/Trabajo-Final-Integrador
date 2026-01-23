@@ -80,7 +80,7 @@ export const eliminate = async (email: string, password: string) => {
       try {
         await user.destroy()
         return {message: 'Usuario eliminado'}
-      } catch (error) {
+      } catch (error: any) {
         if (
           error instanceof ForeignKeyConstraintError ||
           error.name === 'SequelizeForeignKeyConstraintError'
@@ -165,7 +165,7 @@ export const deleteUserId = async (id: number) => {
     try {
       await user.destroy()
       return {message: 'Usuario eliminado'}
-    } catch (error) {
+    } catch (error: any) {
       if (
         error instanceof ForeignKeyConstraintError ||
         error.name === 'SequelizeForeignKeyConstraintError'
