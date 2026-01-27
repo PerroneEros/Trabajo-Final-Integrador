@@ -4,7 +4,13 @@ import * as userService from '../services/user.Service'
 // Controlador para REGISTRO
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    const newUser = await userService.register(req.body)
+    const file = (req as any).file
+    const imagePath = file ? file.path : ''
+    const userData = {
+      ...req.body,
+      image: imagePath,
+    }
+    const newUser = await userService.register(userData)
     res
       .status(201)
       .json({message: 'Usuario registrado con éxito', user: newUser})
@@ -80,7 +86,12 @@ export const changePassword = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id)
-    const data = req.body
+    const file = (req as any).file
+    const imagePath = file ? file.path : ''
+    const data = {
+      ...req.body,
+      image: imagePath,
+    }
     const result = await userService.updateUser(id, data)
     res.status(200).json({message: 'usuario actualizado', result})
   } catch (error) {
