@@ -3,6 +3,8 @@ import nodemailer from 'nodemailer'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import {ForeignKeyConstraintError} from 'sequelize'
+import cloudinary from '../utils/cloudinary'
+import fs from 'fs-extra'
 const transport = nodemailer.createTransport({
   host: process.env.Email_host,
   port: 587,
@@ -13,12 +15,22 @@ const transport = nodemailer.createTransport({
   },
 })
 
-export const register = async (userData: User) => {
+export const register = async (userData: any) => {
   const existingUser = await User.findOne({
     where: {email: userData.email},
   })
   if (existingUser) {
     throw new Error('El correo electrónico ya está en uso')
+  }
+  let imageUrl = ''
+  if (userData.image && userData.image !== '') {
+    try {
+      const result = await cloudinary.uploader.upload(userData.image)
+      imageUrl = result.secure_url
+      await fs.unlink(userData.image)
+    } catch (error) {
+      console.error('Error subiendo imagen perfil:', error)
+    }
   }
   if (
     userData.rol.toLocaleLowerCase() === 'vendedor' ||
@@ -31,7 +43,7 @@ export const register = async (userData: User) => {
       email: userData.email,
       password_hash: hashed,
       rol: userData.rol,
-      image: userData.image,
+      image: imageUrl,
       username: userData.username,
     })
     return newUser
@@ -143,12 +155,27 @@ export const changePassword = async (
 
   return {message: 'Contraseña actualizada'}
 }
-export const updateUser = async (id: number, userData: Partial<User>) => {
+export const updateUser = async (id: number, userData: any) => {
   const user = await User.findByPk(id)
   if (!user) {
     throw new Error('Usuario no encontrado')
   }
-  await user.update(userData)
+  let imageUrl = user.image
+  if (userData.image && userData.image !== '') {
+    try {
+      const result = await cloudinary.uploader.upload(userData.image)
+      imageUrl = result.secure_url
+      await fs.unlink(userData.image)
+    } catch (error) {
+      console.error('Error actualizando imagen:', error)
+    }
+  }
+  await user.update({
+    name: userData.name,
+    email: userData.email,
+    username: userData.username,
+    image: imageUrl,
+  })
   return user
 }
 export const getAllUsers = async () => {
