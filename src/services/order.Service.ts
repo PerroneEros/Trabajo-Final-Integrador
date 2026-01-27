@@ -1,10 +1,10 @@
 import Order from '../models/order'
-import data from '../mock/orderMock.json'
 export const orders = async () => {
-  return data
+  const order = await Order.findAll()
+  return order
 }
 export const orderID = async (id: number) => {
-  const order = data.find(p => p.id_order === id)
+  const order = await Order.findByPk(id)
   if (!order) {
     throw new Error('Pedido no encontrado')
   }
@@ -15,28 +15,16 @@ export const createOrder = async (pedidoData: Order) => {
   if (existing) {
     throw new Error('Pedido ya existente')
   }
-  const order = new Order(pedidoData)
-  data.push(order)
+  const order = await Order.create(pedidoData)
   return order
 }
 export const deleteOrder = async (id: number) => {
   const order = await orderID(id)
-  if (!order) {
-    throw new Error('Pedido no encontrado')
-  }
-  const orderIn = data.findIndex(p => p.id_order === id)
-  if (orderIn >= 0) data.splice(orderIn, 1)
+  await order.destroy()
   return {message: 'Pedido eliminado con exito'}
 }
 export const modifyOrder = async (id: number, pedidoData: Order) => {
   const order = await orderID(id)
-  if (!order) {
-    throw new Error('Pedido no encontrado') 
-  } else {
-    order.state = pedidoData.state
-    order.date = pedidoData.date
-    order.total = pedidoData.total
-    
-    return order
-  }
+  await order.update(pedidoData)
+  return order
 }

@@ -17,6 +17,9 @@ app.get('/', (req: Request, res: Response) => {
     .status(200)
     .json({message: 'API de Agro-Insumos funcionando correctamente'})
 })
+app.use(cors())
+
+app.use(express.json())
 app.use('/api/users', userRoutes)
 app.use('/api/products', productRoutes)
 app.use('/api/report', reportRoute)

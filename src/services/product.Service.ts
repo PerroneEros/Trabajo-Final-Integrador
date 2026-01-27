@@ -1,12 +1,12 @@
 import Product from '../models/product'
-import data from '../mock/productMock.json'
 
 export const getAllProducts = async () => {
-  return data
+  const product = await Product.findAll()
+  return product
 }
 
 export const getProductById = async (id: number) => {
-  const product = data.find(p => p.id_product === id)
+  const product = await Product.findByPk(id)
   if (!product) {
     throw new Error('Producto no encontrado')
   }
@@ -15,31 +15,20 @@ export const getProductById = async (id: number) => {
 
 // Crear
 export const createProduct = async (productData: Product) => {
-  const newProduct = await new Product(productData)
-  data.push(newProduct)
+  const newProduct = await Product.create(productData)
   return newProduct
 }
 
-// Actualizar 
+// Actualizar
 export const updateProduct = async (id: number, productData: Product) => {
-  const producto = await getProductById(id) 
-  if (producto) {
-    producto.name = productData.name
-    producto.description = productData.description
-    producto.price = productData.price
-    producto.stock = productData.stock
-    producto.category = productData.category
-  }
-  return producto
+  const product = await getProductById(id)
+  await product.update(productData)
+  return product
 }
 
 // Eliminar
 export const deleteProduct = async (id: number) => {
-  const product = await getProductById(id) 
-  if (product) {
-    const a = data.findIndex(d => d.id_product === id)
-    if (a >= 0) data.splice(a, 1)
-    return {message: 'Producto eliminado correctamente'}
-  }
-  return {message: 'Producto no encontrado'}
+  const product = await getProductById(id)
+  await product?.destroy()
+  return {message: 'Producto eliminado correctamente'}
 }

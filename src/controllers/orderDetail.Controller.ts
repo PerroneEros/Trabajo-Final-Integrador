@@ -2,7 +2,7 @@ import {Request, Response} from 'express'
 import * as DetallePedidoService from '../services/orderDetail.Service'
 export const orderDetailID = async (req: Request, res: Response) => {
   try {
-    const result = await DetallePedidoService.orderDetailID(
+    const result = await DetallePedidoService.getOrderDetailsbyID(
       parseInt(req.params.id as string),
     )
     res.status(200).json(result)

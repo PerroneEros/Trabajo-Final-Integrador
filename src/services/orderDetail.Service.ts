@@ -1,30 +1,28 @@
 import OrderDetail from '../models/orderDetail'
-import data from '../mock/orderDetailMock.json'
 export const orderDetailID = async (id: number) => {
-  const detail = data.find(d => d.id_detail === id)
+  const detail = await OrderDetail.findByPk(id)
   if (!detail) {
     throw new Error('Detalle no encontrado')
   }
   return detail
 }
+export const getOrderDetailsbyID = async (id: number) => {
+  const details = await OrderDetail.findAll({
+    where: {id_order: id},
+  })
+  return details
+}
 export const modifyDetail = async (id: number, DetailData: OrderDetail) => {
   const detail = await orderDetailID(id)
-  if (detail) {
-    detail.amount = DetailData.amount
-    detail.unit_price = DetailData.unit_price
-    return detail
-  }
+  await detail.update(DetailData)
+  return detail
 }
 export const deleteDetail = async (id: number) => {
   const detail = await orderDetailID(id)
-  if (detail) {
-    const detailIN = data.findIndex(d => d.id_detail === id)
-    if (detailIN >= 0) data.splice(detailIN, 1)
-    return {message: 'Detalle eliminado con exito'}
-  }
+  await detail.destroy()
+  return {message: 'Detalle de orden eliminado'}
 }
 export const createDetail = async (DetailData: OrderDetail) => {
-  const detail = await new OrderDetail(DetailData)
-  data.push(detail)
+  const detail = await OrderDetail.create(DetailData)
   return detail
 }

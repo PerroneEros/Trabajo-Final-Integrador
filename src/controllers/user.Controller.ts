@@ -19,10 +19,8 @@ export const registerUser = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
   try {
     const {email, password} = req.body
-    const user = await userService.login(email, password)
-    const token = user.token
-    const username = user.name
-    res.status(200).json({message: 'Login exitoso', username, token})
+    const result = await userService.login(email, password)
+    res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
       res.status(401).json({message: error.message})
@@ -72,6 +70,39 @@ export const changePassword = async (req: Request, res: Response) => {
       currentPassword,
       newPassword,
     )
+    res.status(200).json(result)
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({message: error.message})
+    }
+  }
+}
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id)
+    const data = req.body
+    const result = await userService.updateUser(id, data)
+    res.status(200).json({message: 'usuario actualizado', result})
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json(error.message)
+    }
+  }
+}
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const result = await userService.getAllUsers()
+    res.status(200).json(result)
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({message: error.message})
+    }
+  }
+}
+export const deleteUserId = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id)
+    const result = await userService.deleteUserId(id)
     res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
