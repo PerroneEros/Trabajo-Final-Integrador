@@ -27,7 +27,12 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const newProduct = await productService.createProduct(req.body)
+    const imagePath = req.file ? req.file.path : ''
+    const productData = {
+      ...req.body,
+      image: imagePath,
+    }
+    const newProduct = await productService.createProduct(productData)
     res
       .status(201)
       .json({message: 'Producto creado con éxito', product: newProduct})
