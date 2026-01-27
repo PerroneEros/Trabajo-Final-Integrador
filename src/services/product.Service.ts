@@ -1,4 +1,6 @@
 import Product from '../models/product'
+import cloudinary from '../utils/cloudinary'
+import fs from 'fs-extra'
 
 export const getAllProducts = async () => {
   const product = await Product.findAll()
@@ -14,8 +16,26 @@ export const getProductById = async (id: number) => {
 }
 
 // Crear
-export const createProduct = async (productData: Product) => {
-  const newProduct = await Product.create(productData)
+export const createProduct = async (productData: any) => {
+  const {name, description, price, stock, category, image} = productData
+  let imageUrl = ''
+  if (image && image !== '') {
+    try {
+      const result = await cloudinary.uploader.upload(image)
+      imageUrl = result.secure_url
+      await fs.unlink(image)
+    } catch (error) {
+      console.error('Error subiendo imagen a Cloudinary:', error)
+    }
+  }
+  const newProduct = await Product.create({
+    name,
+    description,
+    price,
+    stock,
+    category,
+    image: imageUrl,
+  })
   return newProduct
 }
 
