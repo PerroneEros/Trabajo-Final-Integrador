@@ -10,11 +10,13 @@ import {
   deleteUserId,
 } from '../controllers/user.Controller'
 import {authMiddleware} from '../middlewares/auth.Middleware'
+import multer from 'multer'
 
+const upload = multer({dest: 'uploads/'})
 const router = Router()
 
 // Ruta para registrar un nuevo usuario
-router.post('/register', registerUser)
+router.post('/register', upload.single('image'), registerUser)
 
 // Ruta para iniciar sesion
 router.post('/login', loginUser)
@@ -24,6 +26,6 @@ router.delete('/:id', authMiddleware, deleteUserId)
 // Ruta para cambiar contraseña
 router.put('/password/:id', authMiddleware, changePassword)
 //Ruta para actualizar usuario
-router.put('/:id', updateUser)
+router.put('/:id', upload.single('image'), updateUser)
 router.get('/', authMiddleware, getAllUsers)
 export default router
