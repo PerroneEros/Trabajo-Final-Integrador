@@ -17,7 +17,7 @@ router.get('/:id', getProductById)
 
 // Rutas protegidas
 router.post('/', authMiddleware, upload.single('image'), createProduct)
-router.put('/:id', authMiddleware, updateProduct)
+router.put('/:id', authMiddleware, upload.single('image'), updateProduct)
 router.delete('/:id', authMiddleware, deleteProduct)
 
 export default router
