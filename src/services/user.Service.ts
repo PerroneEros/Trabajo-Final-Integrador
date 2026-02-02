@@ -175,6 +175,7 @@ export const updateUser = async (id: number, userData: any) => {
     email: userData.email,
     username: userData.username,
     image: imageUrl,
+    rol: userData.rol || user.rol,
   })
   return user
 }
