@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import {ForeignKeyConstraintError} from 'sequelize'
 import cloudinary from '../utils/cloudinary'
 import fs from 'fs-extra'
-// Importamos el transporter que acabamos de crear
+
 import {transporter} from '../utils/mailer'
 
 export const register = async (userData: any) => {
