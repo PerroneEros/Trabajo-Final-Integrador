@@ -1,6 +1,6 @@
 import OrderDetail from '../models/orderDetail'
-import Product from '../models/product' // Importante importar Product
-import sequelize from '../database/db' // Importante importar Sequelize
+import Product from '../models/product'
+import sequelize from '../database/db' 
 
 export const orderDetailID = async (id: number) => {
   const detail = await OrderDetail.findByPk(id)
@@ -29,7 +29,6 @@ export const deleteDetail = async (id: number) => {
   return {message: 'Detalle de orden eliminado'}
 }
 
-// --- CREAR DETALLE CON TRANSACCIÓN Y STOCK ---
 export const createDetail = async (DetailData: any) => {
   const t = await sequelize.transaction()
 

@@ -25,7 +25,6 @@ export const registerUser = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
   try {
     const {email, password} = req.body
-    // El servicio ya devuelve el objeto plano con token e id_user
     const result = await userService.login(email, password)
     res.status(200).json(result)
   } catch (error) {
@@ -35,8 +34,6 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 }
 
-// ... (El resto de tus controladores recoveryPassword, deleteUser, changePassword, updateUser, getAllUsers, deleteUserId QUEDAN IGUAL que en tu archivo original, están bien).
-// Puedes mantener el código que ya tienes abajo de loginUser.
 export const recoveryPassword = async (req: Request, res: Response) => {
   try {
     await userService.recoveryPassword(req.body.email)
