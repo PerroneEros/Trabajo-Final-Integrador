@@ -42,7 +42,24 @@ export const createProduct = async (productData: any) => {
 // Actualizar
 export const updateProduct = async (id: number, productData: Product) => {
   const product = await getProductById(id)
-  await product.update(productData)
+  let imageUrl = product.image
+  if (productData.image && productData.image !== '') {
+    try {
+      const result = await cloudinary.uploader.upload(productData.image)
+      imageUrl = result.secure_url
+    } catch (error) {
+      console.error('Error actualizando imagen:', error)
+    }
+  }
+  await product.update({
+    name: productData.name,
+    description: productData.description,
+    category: productData.category,
+    price: productData.price,
+    stock: productData.stock,
+    image: imageUrl,
+  })
+  await product.reload()
   return product
 }
 
