@@ -9,14 +9,13 @@ import productRoutes from './routes/product.Routes'
 import reportRoute from './routes/report.Routes'
 import orderRoutes from './routes/order.Routes'
 import orderDetailRoutes from './routes/orderDetail.Routes'
+import contactRoutes from './routes/contact.Routes'
 
 dotenv.config()
 const app: Application = express()
 
-// Configuración de archivos estáticos (Lo que agregó tu equipo)
 app.use('/public', express.static(path.join(__dirname, '../public')))
 
-// Middlewares Globales (Solo una vez)
 app.use(cors())
 app.use(express.json())
 
@@ -32,5 +31,6 @@ app.use('/api/products', productRoutes)
 app.use('/api/report', reportRoute)
 app.use('/api/order', orderRoutes)
 app.use('/api/detail', orderDetailRoutes)
+app.use('/api/contact', contactRoutes)
 
 export default app
