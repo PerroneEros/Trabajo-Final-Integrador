@@ -6,8 +6,10 @@ import productRoutes from './routes/product.Routes'
 import reportRoute from './routes/report.Routes'
 import orderRoutes from './routes/order.Routes'
 import orderDetailRoutes from './routes/orderDetail.Routes'
+import path from 'path'
 dotenv.config()
 const app: Application = express()
+app.use('/public', express.static(path.join(__dirname, '../public')))
 
 app.use(cors())
 app.use(express.json())
