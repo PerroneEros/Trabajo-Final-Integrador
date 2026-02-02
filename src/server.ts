@@ -12,7 +12,7 @@ const main = async () => {
 
     initAssociations()
 
-    await sequelize.sync({force: false, alter: false})
+    await sequelize.sync({force: true, alter: false})
     console.log('Tablas sincronizadas.')
 
     await seedDatabase()
