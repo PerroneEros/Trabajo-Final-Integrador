@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import {ForeignKeyConstraintError} from 'sequelize'
 import cloudinary from '../utils/cloudinary'
 import fs from 'fs-extra'
+
 const transport = nodemailer.createTransport({
   host: process.env.Email_host,
   port: 587,
@@ -22,6 +23,7 @@ export const register = async (userData: any) => {
   if (existingUser) {
     throw new Error('El correo electrónico ya está en uso')
   }
+
   let imageUrl = ''
   if (userData.image && userData.image !== '') {
     try {
@@ -32,6 +34,7 @@ export const register = async (userData: any) => {
       console.error('Error subiendo imagen perfil:', error)
     }
   }
+
   if (
     userData.rol.toLocaleLowerCase() === 'vendedor' ||
     userData.rol.toLocaleLowerCase() === 'cliente'
@@ -63,15 +66,18 @@ export const login = async (email: string, password_raw: string) => {
   if (!isMatch) {
     throw new Error('Credenciales invalidas')
   }
+
   const payload = {
-    id: user.id_user,
+    id: user.id_user, // Esto es importante para el token
     email: user.email,
     rol: user.rol,
     username: user.username,
   }
+
   const secret = process.env.JWT_SECRET as string
   const token = jwt.sign(payload, secret, {expiresIn: '1h'})
 
+  // Devolvemos el objeto plano con el token
   return {
     id_user: user.id_user,
     username: user.username,
@@ -82,6 +88,7 @@ export const login = async (email: string, password_raw: string) => {
     token: token,
   }
 }
+
 export const eliminate = async (email: string, password: string) => {
   const user = await User.findOne({
     where: {email: email},
@@ -108,7 +115,6 @@ export const eliminate = async (email: string, password: string) => {
   throw new Error('Credenciales invalidas')
 }
 
-//Login  con "email y password_raw"
 export const recoveryPassword = async (email: string) => {
   const user = await User.findOne({
     where: {email: email},
@@ -147,7 +153,6 @@ export const changePassword = async (
     throw new Error('Credenciales invalidas')
   }
 
-  // Verificacion - Validacion
   const salt = await bcrypt.genSalt(10)
   const hashed = await bcrypt.hash(newPassword, salt)
   user.password_hash = hashed
@@ -155,6 +160,7 @@ export const changePassword = async (
 
   return {message: 'Contraseña actualizada'}
 }
+
 export const updateUser = async (id: number, userData: any) => {
   const user = await User.findByPk(id)
   if (!user) {
@@ -179,12 +185,14 @@ export const updateUser = async (id: number, userData: any) => {
   })
   return user
 }
+
 export const getAllUsers = async () => {
   const users = await User.findAll({
     attributes: {exclude: ['password_hash', 'token']},
   })
   return users
 }
+
 export const deleteUserId = async (id: number) => {
   const user = await User.findOne({
     where: {id_user: id},
