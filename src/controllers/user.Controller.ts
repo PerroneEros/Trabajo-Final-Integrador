@@ -4,7 +4,13 @@ import * as userService from '../services/user.Service'
 // Controlador para REGISTRO
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    const newUser = await userService.register(req.body)
+    const file = (req as any).file
+    const imagePath = file ? file.path : ''
+    const userData = {
+      ...req.body,
+      image: imagePath,
+    }
+    const newUser = await userService.register(userData)
     res
       .status(201)
       .json({message: 'Usuario registrado con éxito', user: newUser})
@@ -28,7 +34,6 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 }
 
-// Recuperar contraseña
 export const recoveryPassword = async (req: Request, res: Response) => {
   try {
     await userService.recoveryPassword(req.body.email)
@@ -40,7 +45,6 @@ export const recoveryPassword = async (req: Request, res: Response) => {
   }
 }
 
-// Eliminar usuario
 export const deleteUser = async (req: Request, res: Response) => {
   try {
     const result = await userService.eliminate(
@@ -55,7 +59,6 @@ export const deleteUser = async (req: Request, res: Response) => {
   }
 }
 
-// Cambiar la contraseña
 export const changePassword = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id)
@@ -77,10 +80,16 @@ export const changePassword = async (req: Request, res: Response) => {
     }
   }
 }
+
 export const updateUser = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id)
-    const data = req.body
+    const file = (req as any).file
+    const imagePath = file ? file.path : ''
+    const data = {
+      ...req.body,
+      image: imagePath,
+    }
     const result = await userService.updateUser(id, data)
     res.status(200).json({message: 'usuario actualizado', result})
   } catch (error) {
@@ -89,6 +98,7 @@ export const updateUser = async (req: Request, res: Response) => {
     }
   }
 }
+
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const result = await userService.getAllUsers()
@@ -99,6 +109,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
     }
   }
 }
+
 export const deleteUserId = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id)

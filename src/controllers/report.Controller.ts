@@ -25,7 +25,6 @@ export const createReport = async (req: Request, res: Response) => {
   try {
     const {date_generated, generated_by_user, type} = req.body
 
-    // Definimos el tipo por defecto aquí para usarlo tanto en el servicio como en el nombre del archivo
     const finalType = type || 'STOCK'
 
     const result: any = await reporteService.createReport(

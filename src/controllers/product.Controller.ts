@@ -27,7 +27,12 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const newProduct = await productService.createProduct(req.body)
+    const imagePath = req.file ? req.file.path : ''
+    const productData = {
+      ...req.body,
+      image: imagePath,
+    }
+    const newProduct = await productService.createProduct(productData)
     res
       .status(201)
       .json({message: 'Producto creado con éxito', product: newProduct})
@@ -40,9 +45,17 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
   try {
+    const {id} = req.params
+    const imagePath = req.file ? req.file.path : undefined
+    const productData = {
+      ...req.body,
+      price: req.body.price ? parseFloat(req.body.price) : undefined,
+      stock: req.body.stock ? parseInt(req.body.stock) : undefined,
+      image: imagePath,
+    }
     const updatedProduct = await productService.updateProduct(
-      parseInt(req.params.id as string),
-      req.body,
+      Number(id),
+      productData,
     )
     res.status(200).json({
       message: 'Producto actualizado con éxito',
